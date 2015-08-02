@@ -1,8 +1,20 @@
 # Syncia
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/syncia`. To experiment with that code, run `bin/console` for an interactive prompt.
+File sync service with Ruby. The procedure is:
 
-TODO: Delete this and the text above, and describe your gem
+```
+1. Start as a daemon process
+2. Start to watch a designated folder
+3. If updated, execute rsync command
+4. Synchronize your files to remote host
+5. Endup if it received a signal.
+```
+
+Before synchronizing your file, you must register public key to the remote host like below:
+
+```
+$ cat ~/.ssh/id_rsa.pub | shh your_remote_host 'cat >> ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys'
+```
 
 ## Installation
 
@@ -22,7 +34,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```syncia.rb
+require 'Syncia'
+
+syncia = Syncia.new('./testdir')
+syncia.set_remote_info('timakin', '153.121.70.114')
+syncia.set_remote_dir('/home/timakin/sync')
+syncia.run
+```
+
+```CLI
+$ ruby syncia.rb
+$ cat .syncia.pid | xargs kill 
+```
 
 ## Development
 
@@ -32,7 +56,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/syncia/fork )
+1. Fork it ( https://github.com/timakin/syncia/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
