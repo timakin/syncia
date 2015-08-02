@@ -37,9 +37,9 @@ Or install it yourself as:
 ```syncia.rb
 require 'syncia'
 
-syncia = Syncia.new('./testdir')
-syncia.set_remote_info('timakin', '153.121.70.114')
-syncia.set_remote_dir('/home/timakin/sync')
+syncia = Syncia.new('./local_dir')
+syncia.set_remote_info('timakin', '123.456.78.91')
+syncia.set_remote_dir('/home/timakin/remote_dir')
 syncia.run
 ```
 
